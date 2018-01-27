@@ -1,2 +1,5 @@
 # soundscape
-~hack brown 2018 project~
+
+hack brown 2018 project
+
+made by @sarahkemi & @cgarden
