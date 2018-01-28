@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MoodPreference from './MoodPreference.js';
 import PreferencesPage from './PreferencesPage.js';
+import NewEntry from './NewEntry.js';
 
 export default class App extends React.Component {
 
@@ -27,6 +28,14 @@ export default class App extends React.Component {
         <PreferencesPage/>
       </View>
     );
+  }
+
+  renderEntryPage() {
+    return (
+      <View>
+        <NewEntry/>
+      </View>
+    )
   }
 
   render() {
