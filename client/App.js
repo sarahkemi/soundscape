@@ -37,12 +37,12 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-      {}
-      {this.renderPreferencesPage()}
+      {this.state.showPreferences && this.renderPreferencesPage()}
+      {this.state.showJournal && this.renderEntryPage()}
         <Tabs selected={this.state.page} style={{backgroundColor:'white'}}
-              selectedStyle={{color:'red'}} onSelect={el=>this.setState({page:el.props.name})}>
-            <Text name="pref" selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}>Preferences</Text>
-            <Text name="journal" selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}>Journal</Text>
+              selectedStyle={{color:'#841584'}} onSelect={el=>this.setState({page:el.props.name, showPreferences:this.state.showJournal, showJournal:this.state.showPreferences})}>
+            <Text name="pref" selectedIconStyle={{borderTopWidth:2,borderTopColor:'#841584'}}>Preferences</Text>
+            <Text name="journal" selectedIconStyle={{borderTopWidth:2,borderTopColor:'#841584'}}>Journal</Text>
         </Tabs>
       </View>
     );
