@@ -5,7 +5,7 @@ export default class NewEntry extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {text: ''};
+    this.state = {text: '', savedMoods: {}};
     this.onPress=this.onPress.bind(this);
   }
 
@@ -29,23 +29,29 @@ export default class NewEntry extends React.Component {
 
   onPress() {
         this._saveJournal()
+        this._getMoods()
 
-        let moods = this._getMoods()
-        console.log(moods)
   }
 
   async _getMoods(){
   let moodKey  = '@SoundscapeMoodKey'
 
+  output = {}
+
   try {
     const value = await AsyncStorage.getItem(moodKey)
     if (value !== null){
-      return JSON.parse(value)
+      result = JSON.parse(value)
+      this.setState({savedMoods: result})
     }
+
+    return output
   } catch (error) {
       console.log(error)
-      return {}
+
+      return output
     }
+
 }
 
   async _saveJournal() {
@@ -76,6 +82,7 @@ async _getJournal() {
 
   componentWillMount(){
     this._getJournal()
+    this._getMoods()
   }
 
 

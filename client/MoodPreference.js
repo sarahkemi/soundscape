@@ -27,7 +27,7 @@ async _saveMood(){
     try {
     const value = await AsyncStorage.getItem(moodKey)
     if (value !== null){
-      console.log("got data!")
+      // console.log("got data!")
       moods = JSON.parse(value)
     }
       try {
@@ -52,7 +52,7 @@ async _getMood(){
   try {
     const value = await AsyncStorage.getItem(moodKey)
     if (value !== null){
-      console.log("got data!")
+      // console.log("got data!")
       result = JSON.parse(value)
       this.setState({text: result[mood]})
     }
