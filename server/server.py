@@ -26,7 +26,7 @@ def get_playlist():
             json = request.get_json()
             content = json['content']
             pref = json['pref']
-            playlist = {'playlist_url': 'dummy'}
+            playlist = {'playlist_url': 'none'}
 
             songs = get_songs_from_content(sp, content, pref)
 
@@ -43,7 +43,7 @@ def get_playlist():
 def get_songs_from_content(sp, content, pref):
     output = {}
     for feeling in pref:
-                if feeling in content:
+                if feeling.lower() in content.lower():
                     artist_id = get_artist_id(sp, pref[feeling])
                     if artist_id:
                         top_tracks = sp.artist_top_tracks(artist_id, country='US')
@@ -53,7 +53,6 @@ def get_songs_from_content(sp, content, pref):
 
 def get_artist_id(sp, artist):
     search = sp.search(artist, type='artist')
-    print(search)
     if search['artists']['items']:
         return search['artists']['items'][0]['id']
     return None

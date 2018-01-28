@@ -109,6 +109,7 @@ async _getPlaylist() {
   }
 
   async openSpotify(){
+    console.log(this.state.playlistUrl);
     let result = await WebBrowser.openBrowserAsync(this.state.playlistUrl);
   }
 
