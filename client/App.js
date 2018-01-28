@@ -1,26 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Tabs from 'react-native-tabs';
 import MoodPreference from './MoodPreference.js';
 import PreferencesPage from './PreferencesPage.js';
 import NewEntry from './NewEntry.js';
+
 
 export default class App extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      showPref: true,
-      showEntries: false,
-      showCompose: false,
-      showPlaylist: false,
-      // prefrences: {}
+      page: '',
+      showPreferences: true,
+      showJournal: false,
     };
-    // this.savePreferences=this.savePreferences.bind(this);
   }
-
-  // savePreferences(mood, artist) {
-  //
-  // }
 
   renderPreferencesPage () {
     return (
@@ -35,13 +30,20 @@ export default class App extends React.Component {
       <View>
         <NewEntry/>
       </View>
-    )
+    );
   }
+
 
   render() {
     return (
       <View style={styles.container}>
-        {this.renderPreferencesPage()}
+      {}
+      {this.renderPreferencesPage()}
+        <Tabs selected={this.state.page} style={{backgroundColor:'white'}}
+              selectedStyle={{color:'red'}} onSelect={el=>this.setState({page:el.props.name})}>
+            <Text name="pref" selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}>Preferences</Text>
+            <Text name="journal" selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}>Journal</Text>
+        </Tabs>
       </View>
     );
   }
