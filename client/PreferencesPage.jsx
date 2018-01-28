@@ -19,6 +19,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    console.log(this.state.data);
     const statements = this.state.data.map((emotion,index) => <MoodPreference mood={emotion} key={index}/>);
     return statements;
   }
