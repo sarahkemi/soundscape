@@ -20,7 +20,7 @@ export default class MoodPreference extends React.Component {
           placeholder={'artist'}
           style={{height: 20, borderColor: 'gray', borderWidth: 1}}
           onChangeText={(text) => this.setState({text})}
-          // value={this.state.text}
+          value={this.state.text}
           placeholderTextColor={'#DADADA'}
         />
       </View>

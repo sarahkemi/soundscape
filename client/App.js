@@ -7,7 +7,19 @@ export default class App extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      showPref: true,
+      showEntries: false,
+      showCompose: false,
+      showPlaylist: false,
+      // prefrences: {}
+    };
+    // this.savePreferences=this.savePreferences.bind(this);
   }
+
+  // savePreferences(mood, artist) {
+  //
+  // }
 
   renderPreferncesPage () {
     return (

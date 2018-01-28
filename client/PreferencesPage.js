@@ -1,27 +1,34 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import MoodPreference from './MoodPreference.js'
+import { Button, StyleSheet, Text, View, ScrollView } from 'react-native';
+import PreferencesQuestions from './PreferencesQuestions.js'
 
 export default class App extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      data: ["sad", "happy", "upset", "lonely", "scared"]
+      preferences: {}
     }
+    // this.saveEntries=this.saveEntries.bind(this);
   }
 
-  renderTopBar() {
-    return (
-      <Text> Preferences </Text>
-    );
-  }
+  // saveEntries(mood, artist) {
+  //   this.setState({preferences: {mood: artist}});
+  // }
 
   render() {
-    console.log(this.state.data);
-    const statements = this.state.data.map((emotion,index) => <MoodPreference mood={emotion} key={index+1}/>);
-    statements.unshift(<Text key={0}>Preferences</Text>);
-    return statements;
+    return (
+      <ScrollView>
+        <Text>Preferences</Text>
+        <PreferencesQuestions/>
+        <Button
+          // onPress={this.saveEntries}
+          title="Continue"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
+      </ScrollView>
+    );
   }
 }
 
