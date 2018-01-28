@@ -9,6 +9,7 @@ export default class App extends React.Component {
     this.state = {
       preferences: {}
     }
+    this.onPress = this.onPress.bind(this)
     // this.saveEntries=this.saveEntries.bind(this);
   }
 
@@ -16,13 +17,17 @@ export default class App extends React.Component {
   //   this.setState({preferences: {mood: artist}});
   // }
 
+  onPress(){
+
+  }
+
   render() {
     return (
       <ScrollView>
-        <Text>Preferences</Text>
+        <Text style={styles.title}>Listening Preferences</Text>
         <PreferencesQuestions/>
         <Button
-          // onPress={this.saveEntries}
+          onPress={this.onPress}
           title="Continue"
           color="#841584"
           accessibilityLabel="Learn more about this purple button"
@@ -33,6 +38,11 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',

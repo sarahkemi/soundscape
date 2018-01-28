@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import MoodPreference from './MoodPreference.js'
-import PreferencesPage from './PreferencesPage.js'
+import MoodPreference from './MoodPreference.js';
+import PreferencesPage from './PreferencesPage.js';
 
 export default class App extends React.Component {
 
@@ -40,6 +40,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 20,
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',

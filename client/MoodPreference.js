@@ -14,11 +14,12 @@ export default class MoodPreference extends React.Component {
 
   render() {
     return (
-      <View>
-        <Text>I want to hear this artisit when I feel {this.props.mood}:</Text>
+      <View style={styles.prefs}>
+        <Text style={styles.inputTitle}>when I feel {this.props.mood}, I want to hear:</Text>
         <TextInput
-          placeholder={'artist'}
-          style={{height: 20, borderColor: 'gray', borderWidth: 1}}
+          underlineColorAndroid='transparent'
+          placeholder={'click to add artist..'}
+          style={styles.input}
           onChangeText={(text) => this.setState({text})}
           value={this.state.text}
           placeholderTextColor={'#DADADA'}
@@ -28,13 +29,20 @@ export default class MoodPreference extends React.Component {
   }
 }
 
-// AppRegistry.registerComponent('AwesomeProject', () => UselessTextInput);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  prefs: {
+    marginBottom: 10,
+  },
+  inputTitle: {
+    marginBottom: 2,
+    fontSize: 20,
+  },
+  input: {
+    height: 25,
+    fontSize: 18, 
+    // borderColor: 'gray', 
+    // borderWidth: 1,
+    marginBottom: 2,
   },
 });
