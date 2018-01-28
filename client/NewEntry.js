@@ -115,7 +115,14 @@ async _getPlaylist() {
 
   renderPlaylistAccess() {
     return (
-        <Text style={styles.playlistAccess} onPress={this.openSpotify}>{this.state.playlistUrl}</Text>
+      <View style={styles.playlistAccess}>
+      <Button
+        onPress={this.openSpotify}
+        title="Listen to your soundscape"
+        color="#841584"
+        accessibilityLabel="Listen to your soundscape"
+      />
+      </View>
     );
   }
 
@@ -178,6 +185,6 @@ const styles = StyleSheet.create({
   },
   playlistAccess: {
     marginTop: 20,
-    alignItems: 'center'
+    alignItems: 'center',
   },
 });
