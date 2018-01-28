@@ -3,13 +3,14 @@ from flask import request, jsonify
 from config import config
 import spotipy
 import spotipy.util as util
+from random import *
 
 
 app = Flask(__name__)
 
-user = 'sarahkemi'
-scope = 'playlist-modify-private user-library-read'
-auth = util.prompt_for_user_token(user, scope, client_id=config['spotify_id'], client_secret=config['spotify_secret'], redirect_uri=config['spotify_uri'])
+username = 'sarahkemi'
+scope = 'playlist-modify-private'
+auth = util.prompt_for_user_token(username, scope, client_id=config['spotify_id'], client_secret=config['spotify_secret'], redirect_uri=config['spotify_uri'])
 
 
 @app.route('/')
@@ -26,15 +27,11 @@ def get_playlist():
             content = json['content']
             pref = json['pref']
 
-            output = {'songs': []}
+            songs = get_songs_from_content(sp, content, pref)
 
-            for feeling in pref:
-                if feeling in content:
-                    artist_id = get_artist_id(sp, pref[feeling])
-                    if artist_id:
-                        top_tracks = sp.artist_top_tracks(artist_id, country='US')
-                        tracks = [{track['name']:track['id']} for track in top_tracks['tracks']]
-                        output['songs'].extend(tracks)
+            playlist = build_playlist(sp, songs.keys(), 10)
+
+            output = {"songs": songs, "playlist": playlist}
 
             return jsonify(output)
 
@@ -42,11 +39,40 @@ def get_playlist():
     return 'nada'
 
 
-def get_artist_id(sp,artist):
+def get_songs_from_content(sp, content, pref):
+    output = {}
+    for feeling in pref:
+                if feeling in content:
+                    artist_id = get_artist_id(sp, pref[feeling])
+                    if artist_id:
+                        top_tracks = sp.artist_top_tracks(artist_id, country='US')
+                        for track in top_tracks['tracks']:
+                            output[track['id']] = track['name']
+    return output
+
+def get_artist_id(sp, artist):
     search = sp.search(artist, type='artist')
     if search['artists']['items']:
         return search['artists']['items'][0]['id']
     return None
+
+
+def build_playlist(sp, song_ids, length):
+    output = {}
+
+    playlist_name = 'soundscape_' + str(randint(1, 1000))
+    playlist = sp.user_playlist_create(username, playlist_name, public=False)
+    playlist_id = playlist['id']
+    output['create_playlist'] = playlist
+    output['id'] = playlist_id
+
+    track_ids = sample(song_ids, length)
+    update_playlist = sp.user_playlist_add_tracks(username, playlist_id, track_ids)
+    output['update_playlist'] = update_playlist
+
+    return output
+
+
 
 
 if __name__ == "__main__":
