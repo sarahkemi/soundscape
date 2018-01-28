@@ -9,7 +9,7 @@ from random import *
 app = Flask(__name__)
 
 username = 'sarahkemi'
-scope = 'playlist-modify-private'
+scope = 'playlist-modify-private playlist-modify-public'
 auth = util.prompt_for_user_token(username, scope, client_id=config['spotify_id'], client_secret=config['spotify_secret'], redirect_uri=config['spotify_uri'])
 
 
@@ -63,7 +63,7 @@ def build_playlist(sp, song_ids, length):
     output = {}
 
     playlist_name = 'soundscape_' + str(randint(1, 1000))
-    playlist = sp.user_playlist_create(username, playlist_name, public=False)
+    playlist = sp.user_playlist_create(username, playlist_name, public=True)
     playlist_id = playlist['id']
     playlist_url = playlist['external_urls']['spotify']
     output['create_playlist'] = playlist

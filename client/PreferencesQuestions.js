@@ -7,7 +7,7 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: ["sad", "happy", "upset", "lonely", "scared"]
+      data: ["sad", "happy", "chill", "turnt", "productive"]
     }
   }
 

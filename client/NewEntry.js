@@ -118,6 +118,7 @@ async _getPlaylist() {
       <View style={styles.playlistAccess}>
       <Button
         onPress={this.openSpotify}
+        style={styles.playlistButton}
         title="Listen to your soundscape"
         color="#841584"
         accessibilityLabel="Listen to your soundscape"
@@ -130,7 +131,7 @@ async _getPlaylist() {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={styles.entryContainer}>
         <Text style={styles.title}>Entry of the day...</Text>
         <TextInput
           underlineColorAndroid='transparent'
@@ -166,25 +167,25 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
-    paddingTop: 40
   },
   input: {
     minHeight: 120,
+    width: 350,
   },
-  container: {
-    flex: 1,
+  entryContainer: {
     backgroundColor: '#fff',
-    // alignItems: 'center',
     justifyContent: 'flex-start',
-    margin: 20
+    margin: 20,
+    maxWidth: 350,
   },
   submitbutton: {
-    flex: 0,
-    justifyContent: 'flex-end',
-    marginBottom: 0
+    marginBottom: 0,
+    height: 50,
   },
   playlistAccess: {
     marginTop: 20,
-    alignItems: 'center',
   },
+  playlistButton: {
+    height: 50,
+  }
 });
