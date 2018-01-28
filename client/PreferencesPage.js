@@ -10,12 +10,7 @@ export default class App extends React.Component {
       preferences: {}
     }
     this.onPress = this.onPress.bind(this)
-    // this.saveEntries=this.saveEntries.bind(this);
   }
-
-  // saveEntries(mood, artist) {
-  //   this.setState({preferences: {mood: artist}});
-  // }
 
   onPress(){
 

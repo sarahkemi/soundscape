@@ -21,7 +21,7 @@ export default class App extends React.Component {
   //
   // }
 
-  renderPreferncesPage () {
+  renderPreferencesPage () {
     return (
       <View style={styles.container}>
         <PreferencesPage/>
@@ -32,7 +32,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.renderPreferncesPage()}
+        {this.renderPreferencesPage()}
       </View>
     );
   }
