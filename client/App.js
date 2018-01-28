@@ -1,26 +1,28 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MoodPreference from './MoodPreference.js'
+import PreferencesPage from './PreferencesPage.js'
 
 export default class App extends React.Component {
 
-  constructor() {
-    super();
-    this.state = {
-      data: ["sad", "happy", "upset", "lonely", "scared"]
-    }
-    this.renderTopBar=this.renderTopBar.bind(this);
+  constructor(props) {
+    super(props);
   }
 
-  renderTopBar() {
+  renderPreferncesPage () {
     return (
-      <Text> Preferences </Text>
+      <View style={styles.container}>
+        <PreferencesPage/>
+      </View>
     );
   }
 
   render() {
-    const statements = this.state.data.map((emotion,index) => <MoodPreference mood={emotion} key={index}/>);
-    return statements;
+    return (
+      <View style={styles.container}>
+        {this.renderPreferncesPage()}
+      </View>
+    );
   }
 }
 
