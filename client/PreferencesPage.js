@@ -9,7 +9,6 @@ export default class App extends React.Component {
     this.state = {
       data: ["sad", "happy", "upset", "lonely", "scared"]
     }
-    this.renderTopBar=this.renderTopBar.bind(this);
   }
 
   renderTopBar() {
@@ -20,7 +19,8 @@ export default class App extends React.Component {
 
   render() {
     console.log(this.state.data);
-    const statements = this.state.data.map((emotion,index) => <MoodPreference mood={emotion} key={index}/>);
+    const statements = this.state.data.map((emotion,index) => <MoodPreference mood={emotion} key={index+1}/>);
+    statements.unshift(<Text key={0}>Preferences</Text>);
     return statements;
   }
 }
