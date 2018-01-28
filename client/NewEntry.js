@@ -92,6 +92,7 @@ async _getJournal() {
           value={this.state.text}
           placeholderTextColor={'#DADADA'}
           multiline={true}
+          maxLength={1000}
         />
         <View style={styles.submitbutton}>
           <Button
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
     paddingTop: 40
   },
   input: {
-    height: 40,
+    minHeight: 120,
   },
   container: {
     flex: 1,

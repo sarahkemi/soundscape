@@ -61,7 +61,7 @@ async _getMood(){
       console.log(error)
     }
 }
-  
+
   componentWillMount(){
     this._getMood()
   }
@@ -95,8 +95,9 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 25,
-    fontSize: 18, 
-    // borderColor: 'gray', 
+    fontSize: 18,
+    color: '#841584',
+    // borderColor: 'gray',
     // borderWidth: 1,
     marginBottom: 2,
   },
