@@ -21,12 +21,6 @@ export default class App extends React.Component {
       <ScrollView>
         <Text style={styles.title}>Listening Preferences</Text>
         <PreferencesQuestions/>
-        <Button
-          onPress={this.onPress}
-          title="Continue"
-          color="#841584"
-          accessibilityLabel="Learn more about this purple button"
-        />
       </ScrollView>
     );
   }
