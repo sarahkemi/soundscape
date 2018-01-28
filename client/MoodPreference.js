@@ -17,26 +17,44 @@ export default class MoodPreference extends React.Component {
     this._saveMood()
   }
 
-async _saveMood() {
-  let mood = '@SoundscapeMoods:' + this.props.mood
-  let search = this.state.text
+async _saveMood(){
 
-  try {
-    await AsyncStorage.setItem(mood, search)
-    console.log("data saved")
-  } catch (error) {
-      console.log("save error")
-      console.log(error)
-  }
-}
+    let mood = this.props.mood
+    let search = this.state.text
+    let moodKey  = "@SoundscapeMoodKey"
+    let moods = {}
 
-async _getMood() {
-  let mood = '@SoundscapeMoods:' + this.props.mood
-  try {
-    const value = await AsyncStorage.getItem(mood)
+    try {
+    const value = await AsyncStorage.getItem(moodKey)
     if (value !== null){
       console.log("got data!")
-      this.setState({text: value})
+      moods = JSON.parse(value)
+    }
+      try {
+          moods[mood] = search
+          await AsyncStorage.setItem(moodKey, JSON.stringify(moods))
+          console.log("data saved")
+        } catch (error) {
+            console.log("save error")
+            console.log(error)
+        }
+  } catch (error) {
+      console.log("retrieve error")
+      console.log(error)
+    }
+}
+
+
+async _getMood(){
+  let mood = this.props.mood
+  let moodKey  = '@SoundscapeMoodKey'
+
+  try {
+    const value = await AsyncStorage.getItem(moodKey)
+    if (value !== null){
+      console.log("got data!")
+      result = JSON.parse(value)
+      this.setState({text: result[mood]})
     }
   } catch (error) {
       console.log("retrieve error")

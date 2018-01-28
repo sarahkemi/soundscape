@@ -37,7 +37,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-      {this.renderEntryPage()}
+      {this.renderPreferencesPage()}
         <Tabs selected={this.state.page} style={{backgroundColor:'white'}}
               selectedStyle={{color:'red'}} onSelect={el=>this.setState({page:el.props.name})}>
             <Text name="pref" selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}>Preferences</Text>
