@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, Text, TextInput, ScrollView, Keyboard, View, KeyboardAvoidingView } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, ScrollView, Keyboard, View, KeyboardAvoidingView, AsyncStorage } from 'react-native';
 
 export default class NewEntry extends React.Component {
 
@@ -28,8 +28,40 @@ export default class NewEntry extends React.Component {
   // }
 
   onPress() {
-
+        this._saveJournal()
   }
+
+  async _saveJournal() {
+  let entry = this.state.text
+
+  try {
+    await AsyncStorage.setItem('@SoundscapeJournal', entry)
+    console.log("data saved")
+  } catch (error) {
+      console.log("save error")
+      console.log(error)
+  }
+}
+
+async _getJournal() {
+  let journal = '@SoundscapeJournal'
+  try {
+    const value = await AsyncStorage.getItem(journal)
+    if (value !== null){
+      console.log("got data!")
+      this.setState({text: value})
+    }
+  } catch (error) {
+      console.log("retrieve error")
+      console.log(error)
+    }
+}
+
+  componentWillMount(){
+    this._getJournal()
+  }
+
+
 
   render() {
     return (
@@ -38,7 +70,7 @@ export default class NewEntry extends React.Component {
         <TextInput
           underlineColorAndroid='transparent'
           placeholder={'click to enter your journal entry for today...'}
-          // style={styles.input}
+          style={styles.input}
           onChangeText={(text) => this.setState({text})}
           value={this.state.text}
           placeholderTextColor={'#DADADA'}
@@ -68,6 +100,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     paddingTop: 40
+  },
+  input: {
+    height: 40,
   },
   container: {
     flex: 1,
