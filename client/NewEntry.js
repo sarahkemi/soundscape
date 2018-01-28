@@ -1,12 +1,15 @@
 import React from 'react';
 import { Button, StyleSheet, Text, TextInput, ScrollView, Keyboard, View, KeyboardAvoidingView, AsyncStorage } from 'react-native';
+import { WebBrowser } from 'expo';
+var config = require('./config');
 
 export default class NewEntry extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {text: '', savedMoods: {}};
+    this.state = {text: '', savedPrefs: {}, playlistExists: false, playlistUrl:''};
     this.onPress=this.onPress.bind(this);
+    this.openSpotify=this.openSpotify.bind(this);
   }
 
   // componentWillMount () {
@@ -28,12 +31,12 @@ export default class NewEntry extends React.Component {
   // }
 
   onPress() {
-        this._saveJournal()
-        this._getMoods()
-
+        this._saveJournal().then(
+        this._getPrefs()).then(
+        this._getPlaylist())
   }
 
-  async _getMoods(){
+  async _getPrefs(){
   let moodKey  = '@SoundscapeMoodKey'
 
   output = {}
@@ -42,7 +45,7 @@ export default class NewEntry extends React.Component {
     const value = await AsyncStorage.getItem(moodKey)
     if (value !== null){
       result = JSON.parse(value)
-      this.setState({savedMoods: result})
+      this.setState({savedPrefs: result})
     }
 
     return output
@@ -80,9 +83,40 @@ async _getJournal() {
     }
 }
 
+async _getPlaylist() {
+  try {
+    let response = await fetch(config.server_url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        content: this.state.text,
+        pref: this.state.savedPrefs,
+      }),
+})
+    let responseJson = await response.json();
+    await this.setState({playlistExists: true, playlistUrl: responseJson.playlist.playlist_url})
+  } catch (error) {
+    console.error(error);
+  }
+}
+
   componentWillMount(){
     this._getJournal()
-    this._getMoods()
+    this._getPrefs()
+  }
+
+  async openSpotify(){
+    let result = await WebBrowser.openBrowserAsync(this.state.playlistUrl);
+  }
+
+
+  renderPlaylistAccess() {
+    return (
+        <Text style={styles.playlistAccess} onPress={this.openSpotify}>{this.state.playlistUrl}</Text>
+    );
   }
 
 
@@ -109,6 +143,7 @@ async _getJournal() {
             accessibilityLabel="Learn more about this purple button"
           />
         </View>
+        {this.state.playlistExists && this.renderPlaylistAccess()}
         <KeyboardAvoidingView
           style={styles.container}
           behavior="padding"
@@ -137,8 +172,12 @@ const styles = StyleSheet.create({
     margin: 20
   },
   submitbutton: {
-    flex: 1,
+    flex: 0,
     justifyContent: 'flex-end',
     marginBottom: 0
-  }
+  },
+  playlistAccess: {
+    marginTop: 20,
+    alignItems: 'center'
+  },
 });

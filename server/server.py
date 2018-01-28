@@ -26,13 +26,14 @@ def get_playlist():
             json = request.get_json()
             content = json['content']
             pref = json['pref']
+            playlist = {'playlist_url': 'dummy'}
 
             songs = get_songs_from_content(sp, content, pref)
 
-            playlist = build_playlist(sp, songs.keys(), 10)
+            if songs:
+                playlist = build_playlist(sp, songs.keys(), 10)
 
             output = {"songs": songs, "playlist": playlist}
-
             return jsonify(output)
 
         return 'yo playlist'
@@ -52,6 +53,7 @@ def get_songs_from_content(sp, content, pref):
 
 def get_artist_id(sp, artist):
     search = sp.search(artist, type='artist')
+    print(search)
     if search['artists']['items']:
         return search['artists']['items'][0]['id']
     return None
@@ -63,10 +65,16 @@ def build_playlist(sp, song_ids, length):
     playlist_name = 'soundscape_' + str(randint(1, 1000))
     playlist = sp.user_playlist_create(username, playlist_name, public=False)
     playlist_id = playlist['id']
+    playlist_url = playlist['external_urls']['spotify']
     output['create_playlist'] = playlist
     output['id'] = playlist_id
+    output['playlist_url'] = playlist_url
 
-    track_ids = sample(song_ids, length)
+    track_ids = song_ids
+
+    if length < len(song_ids):
+        track_ids = sample(song_ids, length)
+
     update_playlist = sp.user_playlist_add_tracks(username, playlist_id, track_ids)
     output['update_playlist'] = update_playlist
 
