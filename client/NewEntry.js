@@ -29,7 +29,24 @@ export default class NewEntry extends React.Component {
 
   onPress() {
         this._saveJournal()
+
+        let moods = this._getMoods()
+        console.log(moods)
   }
+
+  async _getMoods(){
+  let moodKey  = '@SoundscapeMoodKey'
+
+  try {
+    const value = await AsyncStorage.getItem(moodKey)
+    if (value !== null){
+      return JSON.parse(value)
+    }
+  } catch (error) {
+      console.log(error)
+      return {}
+    }
+}
 
   async _saveJournal() {
   let entry = this.state.text
